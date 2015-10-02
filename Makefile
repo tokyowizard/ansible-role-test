@@ -33,3 +33,9 @@ $(DOCKER):
 
 $(DOCKER_PULL):
 	DOCKER_OPTS="$(DOCKER_OPTS)" make -C $(patsubst %-pull,%,$@) pull
+
+fresh:
+	$(shell docker ps    | tail -n+2 | awk '{print $$1}' | xargs docker kill >/dev/null 2>&1 || true )
+	$(shell docker ps -a | tail -n+2 | awk '{print $$1}' | xargs docker rm >/dev/null 2>&1 || true )
+	$(shell docker images | grep failed | awk '{print $$1,":",$$2}' | sed 's/ //g' | xargs docker rmi >/dev/null 2>&1 || true )
+	$(shell docker images | grep successful | awk '{print $$1,":",$$2}' | sed 's/ //g' | xargs docker rmi >/dev/null 2>&1 || true )

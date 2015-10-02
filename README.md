@@ -236,6 +236,17 @@ Once done, one can removed failed containers by running `docker rmi art/foo:tag`
 or `ansible-role-test snapshots rm art/foo:tag`. A faster way to remove all
 the corresponding images is to run `ansible-role-test snapshots purge`.
 
+## Removing containers
+
+When using the `--save` options, the amount of `failed` and `successful` images can 
+build up.
+
+To remove the `failed`, `successful` and running containers, execute the following:
+
+```
+$ make fresh
+```
+
 ## Paths and config file
 
 Most of the time, your roles might depend on other local roles or plugins, in
